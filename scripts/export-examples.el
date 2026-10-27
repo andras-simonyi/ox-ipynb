@@ -13,6 +13,8 @@
 (let ((org-confirm-babel-evaluate nil)
       (org-babel-default-header-args
        (cons '(:eval . "never-export") org-babel-default-header-args))
+      ;; Fresh CI runners have no ~/.emacs.d for org-id to write into.
+      (org-id-locations-file (make-temp-file "org-id-locations"))
       (failed nil))
   (dolist (file command-line-args-left)
     (condition-case err
