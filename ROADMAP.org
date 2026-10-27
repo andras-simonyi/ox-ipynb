@@ -1,52 +1,58 @@
 #+title: Roadmap: ox-ipynb for Colab course notebooks
 
 Candidate improvements for exporting AI/ML/NLP course notebooks from Org to
-Colab-ready =.ipynb=.  Each item should become a GitHub issue on the fork
-before work starts; move it to /Done/ with the PR number when merged.  Items
+Colab-ready =.ipynb=.  Each item links to its GitHub issue on the fork,
+where the details and acceptance criteria live; move it to /Done/ with the PR number when merged.  Items
 marked /(verify)/ rest on assumptions about Colab that need checking first.
 
 * Infrastructure
-** TODO Make =ox-ipynb.el= byte-compile cleanly, then set =STRICT=1= in CI
+** TODO Make =ox-ipynb.el= byte-compile cleanly, then set =STRICT=1= in CI [[https://github.com/andras-simonyi/ox-ipynb/issues/2][#2]]
 About 40 warnings (unused bindings, wide docstrings, obsolete
 =org-any-link-re= and =org-inline-image-overlays=).
-** TODO Fix or retire the failing =ox-ipynb-v2= test
+** TODO Fix or retire the failing =ox-ipynb-v2= test [[https://github.com/andras-simonyi/ox-ipynb/issues/3][#3]]
 Under =emacs -Q= (CI) only =simple-export-direct= fails: it expects
 =json-read= to return a hash table, but the default is an alist.  Under a
 personal config =exports-both= and =exports-results= also fail (flycheck
 hook in the export buffer).
-** TODO Snapshot ("golden") tests: compare examples' notebooks to committed
+** TODO Bump GitHub Actions to Node 24 versions [[https://github.com/andras-simonyi/ox-ipynb/issues/5][#5]]
+** TODO Snapshot ("golden") tests: compare examples' notebooks to committed [[https://github.com/andras-simonyi/ox-ipynb/issues/4][#4]]
 expected output with cell ids normalized
 
 * Colab compatibility
-** TODO Embed local images in the notebook
+** TODO Embed local images in the notebook [[https://github.com/andras-simonyi/ox-ipynb/issues/6][#6]]
 Colab opens a single notebook, so =[[file:fig.png]]= links break.  Embed
 as cell =attachments= or base64 data URIs (verify which Colab renders),
 with an option to keep links.
-** TODO Colab notebook metadata
+** TODO Link local images to a GitHub image repository [[https://github.com/andras-simonyi/ox-ipynb/issues/17][#17]]
+Alternative to embedding: rewrite local image links to
+=raw.githubusercontent.com= URLs of copies in a dedicated (public) repo, with
+an opt-in step that copies, commits and pushes the images.  Shares one
+image-handling option with the embedding item.
+** TODO Colab notebook metadata [[https://github.com/andras-simonyi/ox-ipynb/issues/7][#7]]
 Allow =#+OX-IPYNB-COLAB:= (or a defcustom) to emit =metadata.colab=
 (=name=, =provenance=, =toc_visible=) and =metadata.accelerator= / =gpuType=
 for GPU notebooks.
-** TODO Hide code cells as Colab forms
+** TODO Hide code cells as Colab forms [[https://github.com/andras-simonyi/ox-ipynb/issues/8][#8]]
 Map e.g. =#+attr_ipynb: :cellView form= or a =:hidden= header arg to
 Colab's =cellView: "form"= cell metadata and =#@title= lines. (verify)
-** TODO "Open in Colab" badge
+** TODO "Open in Colab" badge [[https://github.com/andras-simonyi/ox-ipynb/issues/9][#9]]
 Optional first-cell badge linking to
 =https://colab.research.google.com/github/OWNER/REPO/blob/BRANCH/PATH.ipynb=,
 configured per file or project.
-** TODO Update stale =language_info= (Python 3.5.2) to a current version
-** TODO Check LaTeX rendering differences in Colab (verify)
+** TODO Update stale =language_info= (Python 3.5.2) to a current version [[https://github.com/andras-simonyi/ox-ipynb/issues/10][#10]]
+** TODO Check LaTeX rendering differences in Colab (verify) [[https://github.com/andras-simonyi/ox-ipynb/issues/11][#11]]
 Display math environments (=align=, =equation=), =\begin{...}= without =$$=,
 macros defined with =#+LATEX_HEADER=.
 
 * Teaching workflow
-** TODO Student/solution variants from one source in one command
+** TODO Student/solution variants from one source in one command [[https://github.com/andras-simonyi/ox-ipynb/issues/12][#12]]
 Export both the full and the participant notebook (with a filename suffix)
 without opening Jupyter; usable from batch/Makefile.
-** TODO Exercise cells
+** TODO Exercise cells [[https://github.com/andras-simonyi/ox-ipynb/issues/13][#13]]
 Replace a solution region with a placeholder (e.g. =# YOUR CODE HERE=,
 =raise NotImplementedError=) instead of deleting it.
-** TODO Setup cells for Colab
+** TODO Setup cells for Colab [[https://github.com/andras-simonyi/ox-ipynb/issues/14][#14]]
 Easy way to add a =!pip install ...= cell exported only for Colab.
-** TODO Batch export of a course directory (=org-publish= recipe + docs)
+** TODO Batch export of a course directory (=org-publish= recipe + docs) [[https://github.com/andras-simonyi/ox-ipynb/issues/15][#15]]
 
 * Done
