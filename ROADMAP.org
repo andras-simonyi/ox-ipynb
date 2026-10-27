@@ -1,0 +1,52 @@
+#+title: Roadmap: ox-ipynb for Colab course notebooks
+
+Candidate improvements for exporting AI/ML/NLP course notebooks from Org to
+Colab-ready =.ipynb=.  Each item should become a GitHub issue on the fork
+before work starts; move it to /Done/ with the PR number when merged.  Items
+marked /(verify)/ rest on assumptions about Colab that need checking first.
+
+* Infrastructure
+** TODO Make =ox-ipynb.el= byte-compile cleanly, then set =STRICT=1= in CI
+About 40 warnings (unused bindings, wide docstrings, obsolete
+=org-any-link-re= and =org-inline-image-overlays=).
+** TODO Fix or retire the failing =ox-ipynb-v2= test
+Under =emacs -Q= (CI) only =simple-export-direct= fails: it expects
+=json-read= to return a hash table, but the default is an alist.  Under a
+personal config =exports-both= and =exports-results= also fail (flycheck
+hook in the export buffer).
+** TODO Snapshot ("golden") tests: compare examples' notebooks to committed
+expected output with cell ids normalized
+
+* Colab compatibility
+** TODO Embed local images in the notebook
+Colab opens a single notebook, so =[[file:fig.png]]= links break.  Embed
+as cell =attachments= or base64 data URIs (verify which Colab renders),
+with an option to keep links.
+** TODO Colab notebook metadata
+Allow =#+OX-IPYNB-COLAB:= (or a defcustom) to emit =metadata.colab=
+(=name=, =provenance=, =toc_visible=) and =metadata.accelerator= / =gpuType=
+for GPU notebooks.
+** TODO Hide code cells as Colab forms
+Map e.g. =#+attr_ipynb: :cellView form= or a =:hidden= header arg to
+Colab's =cellView: "form"= cell metadata and =#@title= lines. (verify)
+** TODO "Open in Colab" badge
+Optional first-cell badge linking to
+=https://colab.research.google.com/github/OWNER/REPO/blob/BRANCH/PATH.ipynb=,
+configured per file or project.
+** TODO Update stale =language_info= (Python 3.5.2) to a current version
+** TODO Check LaTeX rendering differences in Colab (verify)
+Display math environments (=align=, =equation=), =\begin{...}= without =$$=,
+macros defined with =#+LATEX_HEADER=.
+
+* Teaching workflow
+** TODO Student/solution variants from one source in one command
+Export both the full and the participant notebook (with a filename suffix)
+without opening Jupyter; usable from batch/Makefile.
+** TODO Exercise cells
+Replace a solution region with a placeholder (e.g. =# YOUR CODE HERE=,
+=raise NotImplementedError=) instead of deleting it.
+** TODO Setup cells for Colab
+Easy way to add a =!pip install ...= cell exported only for Colab.
+** TODO Batch export of a course directory (=org-publish= recipe + docs)
+
+* Done
