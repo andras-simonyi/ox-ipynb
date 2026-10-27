@@ -23,6 +23,11 @@ expected output with cell ids normalized
 Colab opens a single notebook, so =[[file:fig.png]]= links break.  Embed
 as cell =attachments= or base64 data URIs (verify which Colab renders),
 with an option to keep links.
+** TODO Link local images to a GitHub image repository [[https://github.com/andras-simonyi/ox-ipynb/issues/17][#17]]
+Alternative to embedding: rewrite local image links to
+=raw.githubusercontent.com= URLs of copies in a dedicated (public) repo, with
+an opt-in step that copies, commits and pushes the images.  Shares one
+image-handling option with the embedding item.
 ** TODO Colab notebook metadata [[https://github.com/andras-simonyi/ox-ipynb/issues/7][#7]]
 Allow =#+OX-IPYNB-COLAB:= (or a defcustom) to emit =metadata.colab=
 (=name=, =provenance=, =toc_visible=) and =metadata.accelerator= / =gpuType=
