@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 30.1 ships Org 9.7 (minimum supported); snapshot tracks newer Org.
+        emacs_version: ['30.1', 'snapshot']
+    continue-on-error: ${{ matrix.emacs_version == 'snapshot' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: purcell/setup-emacs@master
+        with:
+          version: ${{ matrix.emacs_version }}
+      - uses: astral-sh/setup-uv@v6
+      - name: Show versions
+        run: emacs -Q --batch --eval '(message "Emacs %s, Org %s" emacs-version (progn (require (quote org)) org-version))'
+      - name: Byte-compile
+        run: make compile
+      - name: Unit tests
+        run: make test
+      - name: Export examples and validate with nbformat
+        run: make validate
+      - name: Tests for experimental v2 exporter
+        run: make test-v2
+        continue-on-error: true

@@ -2,6 +2,17 @@
 #+AUTHOR: John Kitchin
 #+OPTIONS: toc:t
 
+* About this fork
+
+This is a fork of [[https://github.com/jkitchin/ox-ipynb][jkitchin/ox-ipynb]] focused on
+writing AI/ML/NLP course notebooks in Org-mode and exporting them for Google
+Colab.  Planned work is in [[file:ROADMAP.org]]; contributor and agent guidelines
+are in [[file:AGENTS.md]].  Run =make help= for development tasks.
+
+** Fork changes
+
+- Test suite for =ox-ipynb.el=, nbformat validation of all examples, and CI.
+
 * Overview
 
 =ox-ipynb= is an Org-mode exporter that converts org-mode files to Jupyter notebooks (=.ipynb= format). It provides a seamless workflow for authoring computational notebooks in Org-mode while maintaining compatibility with the Jupyter ecosystem.
